@@ -1,7 +1,8 @@
 import React from 'react'
 import DBCreate from './db-create'
 import DBRead from './db-read'
-
+import DBUpdate from './db-update'
+import DBDelete from './db-delete'
 import DBPaginate from './db-paginate'
 import DBSearch from './db-search'
 
