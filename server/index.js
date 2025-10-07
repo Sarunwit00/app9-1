@@ -73,3 +73,47 @@ app.get('/api/db/search', (request, response) => {
 app.listen(port, () => {
 	console.log('Server listening on port ' + port)
 })
+
+// ---------------------------------------------------------------------
+app.post('/api/db/update', (request, response) => {
+    let form = request.body
+    let data = {
+        name: form.name || '',
+        price: form.price || 0,
+        detail: form.detail || '',
+        date_added: new Date(Date.parse(form.date_added)) || new Date()
+    }
+
+    Product
+        .findByIdAndUpdate(form._id, data, { useFindAndModify: false })
+        .exec(err => {
+            if (err) {
+                response.json({ error: err })
+                return
+            }
+
+            // หลังการอัปเดต ดึงข้อมูลล่าสุดทั้งหมดจากฐานข้อมูล แล้วส่งกลับไปให้ฝั่งโลคอลแทนข้อมูลเดิม
+            Product.find().exec((err, docs) => {
+                response.json(docs)
+            })
+        })
+})
+
+app.post('/api/db/delete', (request, response) => {
+    let _id = request.body._id
+
+    Product
+        .findByIdAndDelete(_id, { useFindAndModify: false })
+        .exec(err => {
+            if (err) {
+                response.json({ error: err })
+                return
+            }
+
+            // หลังการลบ ดึงข้อมูลทั้งหมดที่เหลืออยู่แล้วส่งกลับไปให้ฝั่งโลคอล
+            Product.find().exec((err, docs) => {
+                response.json(docs)
+            })
+        })
+})
+
