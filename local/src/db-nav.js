@@ -14,7 +14,7 @@ export default function DBNav() {
                 <div style={{margin: '30px 50px'}}>
                     <a href="/db/create">เพิ่มข้อมูล</a> <br/>
                     <a href="/db/read">แสดงข้อมูล</a> <br/>
-                    
+                    ///
                     <a href="/db/paginate">แบ่งเพจ</a> <br/>
                     <a href="/db/search">Workshop: ค้นหาข้อมูล</a> <br/>
                 </div>
